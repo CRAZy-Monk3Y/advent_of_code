@@ -1,0 +1,2 @@
+Total Difference is: 1319616
+Total Similarity Score is : 27267728 

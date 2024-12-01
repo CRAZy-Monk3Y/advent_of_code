@@ -25,9 +25,22 @@ for (let i = 0; i < input_arr_L.length; i++) {
   total_diff += diff;
 }
 
+let similarity_score = 0;
+let repeatCount = 0;
+
+input_arr_L.forEach((valueL) => {
+  input_arr_R.forEach((valueR) => {
+    if (valueL === valueR) {
+      repeatCount++;
+    }
+  });
+  similarity_score += valueL * repeatCount;
+  repeatCount = 0;
+});
+
 fs.writeFileSync(
   path.join(__dirname, "output.txt"),
-  `Total Difference is: ${total_diff}`,
+  `Total Difference is: ${total_diff}\nTotal Similarity Score is : ${similarity_score} `,
   {
     encoding: "utf-8",
   }
