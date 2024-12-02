@@ -1,0 +1,2 @@
+Total Safe report count is: 334
+Total Safe report after using Dampner is: 400

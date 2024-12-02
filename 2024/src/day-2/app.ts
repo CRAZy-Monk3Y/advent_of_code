@@ -6,39 +6,51 @@ const input_string = fs.readFileSync(
   "utf-8"
 );
 
-const input_arr_lines = input_string.split("\r\n");
+const reports = input_string
+  .split("\r\n")
+  .map((line) => line.split(" ").map(Number));
 
-let reports = [];
-let safeReportsCount = 0;
+function isSafe(levels: number[]) {
+  const differences: number[] = [];
 
-input_arr_lines.forEach((line) => {
-  let values = line.split(" ").map((value) => Number(value));
-  const isIncremental = values[0] < values[1];
-  let breaking = false;
-  for (let i = 1; i < values.length && !breaking; i++) {
-    if (
-      isIncremental &&
-      (values[i] - values[i - 1] < 1 || values[i] - values[i - 1] > 3)
-    ) {
-      breaking = true;
-      break;
-    } else if (
-      !isIncremental &&
-      (values[i - 1] - values[i] < 1 || values[i - 1] - values[i] > 3)
-    ) {
-      breaking = true;
-      break;
+  for (let i = 1; i < levels.length; i++) {
+    differences.push(levels[i] - levels[i - 1]);
+  }
+
+  const increasing = differences.every((d) => d >= 1 && d <= 3);
+  const decreasing = differences.every((d) => d <= -1 && d >= -3);
+
+  return increasing || decreasing;
+}
+
+function day02() {
+  let safe = 0;
+  let madeSafe = 0;
+
+  for (const report of reports) {
+    let tolerable = false;
+
+    for (let i = 0; i < report.length; i++) {
+      const removed = [...report.slice(0, i), ...report.slice(i + 1)];
+
+      if (isSafe(removed)) {
+        tolerable = true;
+        break;
+      }
     }
+
+    if (isSafe(report)) safe++;
+    if (isSafe(report) || tolerable) madeSafe++;
   }
-  if (!breaking) {
-    safeReportsCount++;
-  }
-  reports.push(values);
-});
+
+  return [safe, madeSafe];
+}
+
+const [safeReportsCount, safeWithDampnerCount] = day02();
 
 fs.writeFileSync(
   path.join(__dirname, "output.txt"),
-  `Total Safe report count is: ${safeReportsCount}`,
+  `Total Safe report count is: ${safeReportsCount}\nTotal Safe report after using Dampner is: ${safeWithDampnerCount}`,
   {
     encoding: "utf-8",
   }
