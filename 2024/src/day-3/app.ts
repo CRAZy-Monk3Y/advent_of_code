@@ -26,7 +26,6 @@ let startIndex = 0,
 function checkMultiplicationSum(substring: string): number {
   const regex = /mul\((\d+),(\d+)\)/g;
   const matches: any = substring.match(regex);
-  console.log(matches);
 
   let sum = 0;
   matches.forEach((match: string) => {
