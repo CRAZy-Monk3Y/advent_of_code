@@ -6,7 +6,7 @@ const input_string = fs.readFileSync(
   "utf-8"
 );
 const len = input_string.length;
-
+// port 1
 function doMultiplication(inputString: string): number {
   let commaIndex = inputString.indexOf(",");
   let num1 = Number(inputString.slice(4, commaIndex));
@@ -16,7 +16,6 @@ function doMultiplication(inputString: string): number {
 
 let multiplicationSum = 0;
 
-// Part 2
 let startIndex = 0,
   endIndex = len,
   tempSubStr = "",
@@ -37,6 +36,7 @@ function checkMultiplicationSum(substring: string): number {
 
 multiplicationSum = checkMultiplicationSum(input_string);
 
+// Part 2
 for (let i = 0; i < len; i++) {
   if (input_string.substring(i, i + 7) === "don't()" && isEnabled) {
     isEnabled = false;
