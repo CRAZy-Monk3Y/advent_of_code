@@ -1,0 +1,2 @@
+XMAS Sum is: 2718
+MAS Sum is: 2046
